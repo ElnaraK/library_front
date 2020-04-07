@@ -5,7 +5,10 @@
   <a routerLink="/categories">Categories</a>
   <a routerLink="/my-books">My books</a>
   <a routerLink="/authorization">Authorization</a>
-  <a id="log">Log out</a>
+  <a id="log">
+    <span *ngIf="authorized">Log out</span>
+    <span *ngIf="!authorized">Name</span>
+  </a>
 </nav>
 <router-outlet></router-outlet>
 

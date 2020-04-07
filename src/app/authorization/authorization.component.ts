@@ -15,7 +15,7 @@ export class AuthorizationComponent implements OnInit {
     mail: '',
     password1: '',
     password2: '',
-    booksId: 1
+    booksISBN: []
   };
   currentUser: User;
   constructor(
@@ -36,8 +36,6 @@ export class AuthorizationComponent implements OnInit {
       this.user.password1 = '';
       this.present = false;
     } else {
-      this.user.mail = this.user.mail;
-      this.user.password1 = this.user.password1;
       this.present = true;
     }
   }
@@ -49,9 +47,6 @@ export class AuthorizationComponent implements OnInit {
       this.user.password2 = '';
       this.present = false;
     } else {
-      this.user.mail = this.user.mail;
-      this.user.password1 = this.user.password1;
-      this.user.password2 = this.user.password2;
       this.present = true;
     }
   }
@@ -59,5 +54,12 @@ export class AuthorizationComponent implements OnInit {
     this.user.mail = '';
     this.user.password1 = '';
     this.user.password2 = '';
+  }
+
+  submit() {
+    this.userService.addUser(this.user)
+      .subscribe(
+        success => alert('Done')
+      );
   }
 }
