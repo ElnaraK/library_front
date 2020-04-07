@@ -1,0 +1,14 @@
+[
+  {
+    "mail": "kelnara@mail.ru",
+    "password1": "password" ,
+    "password2": "password",
+    "booksId": 1
+  },
+  {
+    "mail": "alua@mail.ru",
+    "password1": "password" ,
+    "password2": "password",
+    "booksId": 2
+  }
+]
