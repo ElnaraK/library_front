@@ -10,6 +10,8 @@ import { BooksComponent } from './books/books.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { CategoryBooksComponent } from './category-books/category-books.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
+import {UserService} from './user.service';
+import {httpInterceptorProviders} from '../http-interceptors';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,10 @@ import { AuthorizationComponent } from './authorization/authorization.component'
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

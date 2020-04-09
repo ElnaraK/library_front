@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { UserService } from '../user.service';
-import { OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-authorization',
@@ -17,7 +16,6 @@ export class AuthorizationComponent implements OnInit {
     password2: '',
     booksISBN: []
   };
-  currentUser: User;
   constructor(
     private userService: UserService,
   ) { }
@@ -30,36 +28,19 @@ export class AuthorizationComponent implements OnInit {
     this.authorized = false;
   }
   login(): void {
-    if (this.user.mail !== '' && this.user.password1 !== '') {
-      this.currentUser = this.user;
-      this.user.mail = '';
-      this.user.password1 = '';
-      this.present = false;
-    } else {
-      this.present = true;
-    }
+    this.present = (this.user.mail !== '' && this.user.password1 !== '');
   }
   register(): void {
     if (this.user.mail !== '' && this.user.password1 !== '' && this.user.password1 === this.user.password2) {
-      this.userService.addUser(this.user);
-      this.user.mail = '';
-      this.user.password1 = '';
-      this.user.password2 = '';
-      this.present = false;
+      this.userService.addUser(this.user)
+        .subscribe();
+      this.login();
     } else {
-      this.present = true;
+      this.present = false;
     }
   }
-  clear(): void {
-    this.user.mail = '';
-    this.user.password1 = '';
-    this.user.password2 = '';
-  }
-
   submit() {
     this.userService.addUser(this.user)
-      .subscribe(
-        success => alert('Done')
-      );
+      .subscribe();
   }
 }

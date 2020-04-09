@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category.service';
-import { ActivatedRoute } from '@angular/router';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-categories',
@@ -14,10 +11,7 @@ export class CategoriesComponent implements OnInit {
   selected: Category;
   categories: Category[];
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     public categoriesService: CategoryService,
-    private http: HttpClient
   ) { }
   ngOnInit(): void {
     this.getCategories();

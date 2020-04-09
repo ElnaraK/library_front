@@ -24,6 +24,7 @@
 
 button {
   width: 100px;
+  margin-bottom: 20px;
   line-height: 20px;
   border: 5px white groove;
   border-radius: 7px;
@@ -70,7 +71,7 @@ img {
 }
 .more-button {
   position: absolute;
-  padding: 200px 0 75px 1300px;
+  padding: 150px 0 75px 1300px;
 }
 .title {
   font-size: 30px;

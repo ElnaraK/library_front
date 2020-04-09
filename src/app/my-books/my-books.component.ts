@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../user';
 import {Book} from '../book';
-import {MybooksService} from '../mybooks.service';
+import {MyBooksService} from '../my-books.service';
+import {UserService} from '../user.service';
+
 
 @Component({
   selector: 'app-my-books',
@@ -11,19 +13,31 @@ import {MybooksService} from '../mybooks.service';
 export class MyBooksComponent implements OnInit {
   authorized = true;
   selected: Book;
-  user: User;
   books: Book[];
+  user: User = {
+    mail: '',
+    password1: '',
+    password2: '',
+    booksISBN: []
+  };
   constructor(
-    private mybooksService: MybooksService,
+    private myBooksService: MyBooksService,
+    private userService: UserService,
   ) { }
   ngOnInit(): void {
     this.getBooks();
   }
   getBooks(): void {
-    this.mybooksService.getMyBooks()
+    this.myBooksService.getMyBooks()
       .subscribe(books => (this.books = books));
   }
   onSelect(book: Book) {
     this.selected = book;
+  }
+
+  deleteBook(): void {
+    this.userService.deleteBook(this.user, this.selected.isbn)
+      .subscribe();
+    window.alert('Your book has been deleted!');
   }
 }

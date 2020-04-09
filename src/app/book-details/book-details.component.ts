@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Book} from '../book';
 import { ActivatedRoute } from '@angular/router';
 import {BookService} from '../book.service';
-import { Location } from '@angular/common';
-import { MybooksService} from '../mybooks.service';
+import { MyBooksService} from '../my-books.service';
+import {UserService} from '../user.service';
+import {User} from '../user';
 
 @Component({
   selector: 'app-book-details',
@@ -13,14 +14,22 @@ import { MybooksService} from '../mybooks.service';
 export class BookDetailsComponent implements OnInit {
   selected: Book;
   isbn = +this.route.snapshot.paramMap.get('isbn');
+  myBooks: Book[];
+  user: User = {
+    mail: '',
+    password1: '',
+    password2: '',
+    booksISBN: []
+  };
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
-    private mybooksService: MybooksService,
-    private location: Location
+    private myBooksService: MyBooksService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
+    this.getMyBooks();
     this.getBook();
   }
 
@@ -30,7 +39,13 @@ export class BookDetailsComponent implements OnInit {
         this.selected = data.find(book => (book.isbn === this.isbn));
       });
   }
-  addBook(book: Book): void {
-    this.mybooksService.addBook(book);
+  private getMyBooks() {
+    this.myBooksService.getMyBooks()
+      .subscribe(data => (this.myBooks = data));
+  }
+  addBook(): void {
+    this.userService.addBook(this.user, this.selected.isbn)
+      .subscribe();
+    window.alert('Your book has been added!');
   }
 }

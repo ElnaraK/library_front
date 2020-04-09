@@ -10,7 +10,7 @@
             <div class="right">
               <div class="title">
                 <p>{{book.title}}</p>
-              </div>]\\
+              </div>
               <div class="description">
                 <p>{{book.description}}</p>
               </div>
@@ -19,6 +19,7 @@
               <a routerLink="/books/{{book.isbn}}">
                 <button>more...</button>
               </a>
+              <button (click)="deleteBook()">delete</button>
             </div>
           </div>
         </div>

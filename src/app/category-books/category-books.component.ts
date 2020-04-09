@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Book} from '../book';
 import {ActivatedRoute} from '@angular/router';
 import {BookService} from '../book.service';
-import {CategoryService} from '../category.service';
 
 @Component({
   selector: 'app-category-books',
@@ -16,7 +15,6 @@ export class CategoryBooksComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
-    private categoriesService: CategoryService,
   ) { }
 
   ngOnInit(): void {

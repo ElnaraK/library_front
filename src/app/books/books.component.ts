@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Book} from '../book';
 import { ActivatedRoute } from '@angular/router';
 import {BookService} from '../book.service';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-books',

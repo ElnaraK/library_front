@@ -8,7 +8,6 @@ import {CategoryBooksComponent} from './category-books/category-books.component'
 import {AuthorizationComponent} from './authorization/authorization.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/my-books', pathMatch: 'full' },
   { path: 'categories', component: CategoriesComponent},
   { path: 'categories/:id', component: CategoryBooksComponent},
   { path: 'categories/:id/:isbn', component: BookDetailsComponent},
