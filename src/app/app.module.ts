@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
@@ -11,7 +11,7 @@ import { BookDetailsComponent } from './book-details/book-details.component';
 import { CategoryBooksComponent } from './category-books/category-books.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import {UserService} from './user.service';
-import {httpInterceptorProviders} from '../http-interceptors';
+import {AuthInterceptor} from './authInterceptor';
 
 @NgModule({
   declarations: [
@@ -30,8 +30,11 @@ import {httpInterceptorProviders} from '../http-interceptors';
     FormsModule
   ],
   providers: [
-    UserService,
-    httpInterceptorProviders
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

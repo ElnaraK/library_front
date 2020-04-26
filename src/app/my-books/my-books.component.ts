@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../user';
 import {Book} from '../book';
 import {MyBooksService} from '../my-books.service';
-import {UserService} from '../user.service';
 
 
 @Component({
@@ -11,33 +9,28 @@ import {UserService} from '../user.service';
   styleUrls: ['./my-books.component.css']
 })
 export class MyBooksComponent implements OnInit {
-  authorized = true;
+  authorized = false;
   selected: Book;
   books: Book[];
-  user: User = {
-    mail: '',
-    password1: '',
-    password2: '',
-    booksISBN: []
-  };
   constructor(
     private myBooksService: MyBooksService,
-    private userService: UserService,
   ) { }
   ngOnInit(): void {
     this.getBooks();
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.authorized = true;
+    }
   }
   getBooks(): void {
     this.myBooksService.getMyBooks()
-      .subscribe(books => (this.books = books));
+      .subscribe(books => (this.books = books.books));
   }
   onSelect(book: Book) {
     this.selected = book;
   }
 
-  deleteBook(): void {
-    this.userService.deleteBook(this.user, this.selected.isbn)
-      .subscribe();
-    window.alert('Your book has been deleted!');
+  deleteBook(id: number) {
+    this.myBooksService.deleteBook(id).subscribe();
   }
 }

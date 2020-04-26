@@ -1,6 +1,6 @@
 <div *ngIf="selectedCategoryBooks">
   <div class="flex">
-    <div *ngFor="let book of selectedCategoryBooks" (click)="onSelect(book)">
+    <div *ngFor="let book of selectedCategoryBooks">
       <div class="item">
         <div class="image">
           <img [src]=book.image alt="image">

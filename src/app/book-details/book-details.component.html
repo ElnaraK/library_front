@@ -1,30 +1,30 @@
-<div *ngIf="selected">
+<div *ngIf="book">
   <div class="grid-container">
     <div id="title">
-      <p>{{selected.title}}</p>
+      <p>{{book.title}}</p>
     </div>
     <div id="description">
-      <p class="fun-hover">{{selected.description}}</p>
+      <p class="fun-hover">{{book.description}}</p>
     </div>
     <div class="image">
-      <img [src]="selected.image" alt="book's image">
+      <img [src]="book.image" alt="book's image">
     </div>
     <div class = "details">
       <p>
-        ISBN: {{selected.isbn}}<br>
-        Publisher: {{selected.publisher}}<br>
-        Author: {{selected.author}}<br>
-        Genre: {{selected.genre}}<br>
-        Year: {{selected.year}}<br>
-        Pages: {{selected.pages}}<br>
+        ISBN: {{book.isbn}}<br>
+        Publisher: {{book.publisher}}<br>
+        Author: {{book.author}}<br>
+        Genre: {{book.genre}}<br>
+        Year: {{book.year}}<br>
+        Pages: {{book.pages}}<br>
       </p>
     </div>
     <div id = "buttons">
-      <a href="{{selected.book}}">
+      <a href="{{book.book}}">
         <button id="button1">OPEN</button>
       </a>
       <br>
-      <button id="button2" (click)="addBook()">ADD</button>
+      <button id="button2" (click)="addBook(book.id)">ADD</button>
     </div>
   </div>
 </div>

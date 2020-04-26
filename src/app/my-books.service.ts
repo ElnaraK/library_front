@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Book } from './book';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Mybook} from './mybook';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MyBooksService {
-  books = 'assets/my-books.json';
+  base = 'http://127.0.0.1:8000';
   httpHeader = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
@@ -15,14 +16,15 @@ export class MyBooksService {
     private http: HttpClient,
   ) { }
 
-  getMyBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.books);
+  getMyBooks(): Observable<Mybook> {
+    return this.http.get<Mybook>(`${this.base}/api/users/${localStorage.getItem('mail')}/mybooks/`);
   }
-  addBook(book: Book): Observable<Book[]> {
-    return this.http.post<Book[]>(this.books, book, this.httpHeader);
+  addBook(id: number): Observable<Mybook> {
+    return this.http.post<Mybook>(`${this.base}/api/users/${localStorage.getItem('mail')}/mybooks/${id}`, {
+      id
+    });
   }
-  deleteBook(book: Book): Observable<Book[]> {
-    const url = `${this.books}/${book.isbn}`;
-    return this.http.delete<Book[]>(url, this.httpHeader);
+  deleteBook(id: number): Observable<Mybook> {
+    return this.http.delete<Mybook>(`${this.base}/api/users/${localStorage.getItem('mail')}/mybooks/`, this.httpHeader);
   }
 }

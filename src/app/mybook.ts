@@ -1,8 +1,6 @@
 import {Book} from './book';
 
-export interface User {
+export interface Mybook {
   id: number;
-  mail: string;
-  password: string;
   books: Book[];
 }

@@ -19,13 +19,20 @@
               <a routerLink="/books/{{book.isbn}}">
                 <button>more...</button>
               </a>
-              <button (click)="deleteBook()">delete</button>
+              <button (click)="deleteBook(book.id)">delete</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <div *ngIf="books.length==0">
+      <div class="window">
+        <p>
+          You don't have saved books!
+        </p>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="!authorized">

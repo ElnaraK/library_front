@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../user';
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,39 +7,51 @@ import { UserService } from '../user.service';
   styleUrls: ['./authorization.component.css']
 })
 export class AuthorizationComponent implements OnInit {
-  authorized = true;
-  present = false;
-  user: User = {
-    mail: '',
-    password1: '',
-    password2: '',
-    booksISBN: []
-  };
+  authorized = false;
+  logged = true;
+  mail: string;
+  password1: string;
+  password2: string;
   constructor(
     private userService: UserService,
   ) { }
   ngOnInit(): void {
-  }
-  loginPage(): void {
-    this.authorized = true;
-  }
-  registrationPage(): void {
-    this.authorized = false;
-  }
-  login(): void {
-    this.present = (this.user.mail !== '' && this.user.password1 !== '');
-  }
-  register(): void {
-    if (this.user.mail !== '' && this.user.password1 !== '' && this.user.password1 === this.user.password2) {
-      this.userService.addUser(this.user)
-        .subscribe();
-      this.login();
-    } else {
-      this.present = false;
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.authorized = true;
     }
   }
-  submit() {
-    this.userService.addUser(this.user)
-      .subscribe();
+  loginPage(): void {
+    this.logged = true;
+  }
+  registrationPage(): void {
+    this.logged = false;
+  }
+  login() {
+    this.userService.login(this.mail, this.password1)
+      .subscribe(res => {
+
+        localStorage.setItem('token', res.token);
+        this.authorized = true;
+        this.mail = '';
+        this.password1 = '';
+      });
+    localStorage.setItem('mail', this.mail);
+  }
+  register(): void {
+    if (this.mail !== '' && this.password1 !== '' && this.password1 === this.password2) {
+      this.userService.register(this.mail, this.password1).subscribe( res => {
+        this.login();
+      });
+    }
+    this.authorized = true;
+    this.mail = '';
+    this.password1 = '';
+    this.password2 = '';
+  }
+
+  logOut() {
+    localStorage.clear();
+    this.authorized = false;
   }
 }

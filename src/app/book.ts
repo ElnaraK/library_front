@@ -1,5 +1,8 @@
+import {Category} from './category';
+
 export interface Book {
-  categoryId: number;
+  id: number;
+  category: Category;
   isbn: number;
   title: string;
   description: string;

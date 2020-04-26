@@ -3,8 +3,6 @@ import {Book} from '../book';
 import { ActivatedRoute } from '@angular/router';
 import {BookService} from '../book.service';
 import { MyBooksService} from '../my-books.service';
-import {UserService} from '../user.service';
-import {User} from '../user';
 
 @Component({
   selector: 'app-book-details',
@@ -12,40 +10,31 @@ import {User} from '../user';
   styleUrls: ['./book-details.component.css']
 })
 export class BookDetailsComponent implements OnInit {
-  selected: Book;
+  authorized = false;
+  book: Book;
   isbn = +this.route.snapshot.paramMap.get('isbn');
-  myBooks: Book[];
-  user: User = {
-    mail: '',
-    password1: '',
-    password2: '',
-    booksISBN: []
-  };
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
     private myBooksService: MyBooksService,
-    private userService: UserService,
   ) { }
-
   ngOnInit(): void {
-    this.getMyBooks();
     this.getBook();
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.authorized = true;
+    }
   }
-
   getBook(): void {
-    this.bookService.getBooks()
-      .subscribe(data => {
-        this.selected = data.find(book => (book.isbn === this.isbn));
-      });
+    this.bookService.getBook(this.isbn)
+      .subscribe(book => this.book = book);
   }
-  private getMyBooks() {
-    this.myBooksService.getMyBooks()
-      .subscribe(data => (this.myBooks = data));
-  }
-  addBook(): void {
-    this.userService.addBook(this.user, this.selected.isbn)
-      .subscribe();
-    window.alert('Your book has been added!');
+  addBook(id: number): void {
+    if (!this.authorized) {
+      window.alert('Please authorize to use this option!');
+    } else {
+      this.myBooksService.addBook(id).subscribe();
+      window.alert('Book has been added to your collection!!');
+    }
   }
 }

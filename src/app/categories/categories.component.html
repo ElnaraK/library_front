@@ -1,7 +1,7 @@
 <nav *ngIf="categories">
   <div class = "dropdown-content" id="drop">
     <a routerLink = "/books">All books</a>
-    <div *ngFor="let category of categories" (click)="onSelect(category)">
+    <div *ngFor="let category of categories">
       <a routerLink="{{category.id}}">{{category.title}}</a>
     </div>
   </div>

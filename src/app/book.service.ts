@@ -7,12 +7,18 @@ import { Book } from './book';
   providedIn: 'root'
 })
 export class BookService {
-  books = 'assets/books.json';
+  base = 'http://127.0.0.1:8000';
   constructor(
     private http: HttpClient,
   ) { }
 
   getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.books);
+    return this.http.get<Book[]>(`${this.base}/api/books/`);
+  }
+  getBook(isbn: number): Observable<Book> {
+    return this.http.get<Book>(`${this.base}/api/books/${isbn}/`);
+  }
+  getCategoryBooks(id: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.base}/api/categories/${id}/`);
   }
 }
